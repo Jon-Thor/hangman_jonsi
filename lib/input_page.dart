@@ -2,9 +2,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 
-HangmanWords hangmanwords = HangmanWords();
-
-
 List<String> wordList = [
   "Talos", "Horus", "Russ",
 ];
@@ -34,11 +31,11 @@ class _InputPageState extends State<InputPage>{
               ],),
           TextField(
             decoration: InputDecoration(
-              labelText: hangmanwords.words(),
+              labelText: words(),
             ),
             onSubmitted: (text){
               setState(() {});
-              if(hangmanwords.words().toLowerCase().contains(text.toLowerCase())){
+              if(words().toLowerCase().contains(text.toLowerCase())){
               }else{
                 wrongAnswer += text + " ";
               }
@@ -49,14 +46,14 @@ class _InputPageState extends State<InputPage>{
             child: Image.asset("images/40K.jpg"),
           ),
           Container(
-            child: Text(hangmanwords.words()),
+            child: Text(words()),
           ),
           Container(
             color: Colors.red,
             child: MaterialButton(
               onPressed: () {
                 setState(() {});
-                hangmanwords.number();
+                number();
                 },
               child: Text("${wordList.length}"),),
           )
@@ -65,22 +62,16 @@ class _InputPageState extends State<InputPage>{
   }
 }
 
+int wordListNumber = Random().nextInt(wordList.length);
 
+int number()
+{
+  return wordListNumber = Random().nextInt(wordList.length);
+}
 
-class HangmanWords {
-
-
-  int wordListNumber = Random().nextInt(wordList.length);
-
-  void number()
-  {
-    wordListNumber = Random().nextInt(wordList.length);
-  }
-  String words() {
+String words() {
     return wordList[wordListNumber];
   }
 
-
-}
 
 
