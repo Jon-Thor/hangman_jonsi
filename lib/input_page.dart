@@ -1,14 +1,13 @@
-
 import 'dart:math';
 import 'package:flutter/material.dart';
 
-const Icon wrong = Icon(Icons.close,color: Colors.red,);
-const Icon right = Icon(Icons.close,color: Colors.green,);
 
-class HangmanWords {
+HangmanWords hangmanwords = HangmanWords();
 
 
-}
+List<String> wordList = [
+  "Talos", "Horus", "Russ",
+];
 
 class InputPage extends StatefulWidget {
   @override
@@ -18,12 +17,6 @@ class InputPage extends StatefulWidget {
 class _InputPageState extends State<InputPage>{
 
   String wrongAnswer = "";
-
-  List<String> wordList = [
-    "Talos", "Horus", "Russ",];
-
-  int wordListNumber = Random().nextInt(3);
-
 
   @override
   Widget build(BuildContext context){
@@ -37,31 +30,57 @@ class _InputPageState extends State<InputPage>{
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Container(
-                  child: Text(wrongAnswer),
-                )
-              ],
-              ),
+                 Text(wrongAnswer),
+              ],),
           TextField(
             decoration: InputDecoration(
-              labelText: wordList[wordListNumber],
+              labelText: hangmanwords.words(),
             ),
             onSubmitted: (text){
               setState(() {});
-              if(wordList[wordListNumber].toLowerCase().contains(text.toLowerCase())){
+              if(hangmanwords.words().toLowerCase().contains(text.toLowerCase())){
               }else{
                 wrongAnswer += text + " ";
               }
             },
           ),
-      Container(
+      SizedBox(
+        height: 400.0,
             child: Image.asset("images/40K.jpg"),
           ),
           Container(
-            child: Text(wordList[wordListNumber][0]),
+            child: Text(hangmanwords.words()),
+          ),
+          Container(
+            color: Colors.red,
+            child: MaterialButton(
+              onPressed: () {
+                setState(() {});
+                hangmanwords.number();
+                },
+              child: Text("${wordList.length}"),),
           )
-        ],
-      ),
+        ],),
     );
   }
 }
+
+
+
+class HangmanWords {
+
+
+  int wordListNumber = Random().nextInt(wordList.length);
+
+  void number()
+  {
+    wordListNumber = Random().nextInt(wordList.length);
+  }
+  String words() {
+    return wordList[wordListNumber];
+  }
+
+
+}
+
+
