@@ -10,6 +10,9 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   @override
+  final clear = TextEditingController();
+
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -26,6 +29,7 @@ class _StartPageState extends State<StartPage> {
               onPressed: () {
                 setState(() {});
                 number();
+                lines().Lines();
                 Navigator.push(context, MaterialPageRoute
                   (builder: (context) => InputPage())
                 );
@@ -40,12 +44,14 @@ class _StartPageState extends State<StartPage> {
               width: 240.0,
               color: Colors.red,
               child: TextField(
+                controller: clear,
                 textAlign: TextAlign.center,
                   decoration: InputDecoration(
                     hintText: "Add a word",
                   ),
                   onSubmitted: (text) {
-                    wordList.add(text);
+                  clear.clear();
+                  wordList.add(text);
                   }),
             )
           )
