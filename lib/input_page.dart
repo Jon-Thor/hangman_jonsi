@@ -1,17 +1,20 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'end_screen.dart';
 
 
 List<String> wordList = [
-  "Talos", "Horus", "Russ",
+  "Talos", "Rogal Dorn", "Russ",
 ];
 
 class lines {
-  String Lines(){
+  String textLines(){
     String line = "_,"*words().length;
     return line;
   }
 }
+
+String winLose = "";
 
 
 
@@ -22,44 +25,47 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage>{
 
-  String winLose = "";
-
   void WinOrLose(int result){
     if(result == 1){
-      winLose = "You won";
+      winLose = "You won, ${words()} was correct";
     }else if(result == 2){
-      winLose = "You lost";
+      winLose = "You lost, the word was ${words()}";
     }
-  }
+    Navigator.push(context, MaterialPageRoute
+    (builder: (context) => EndScreen()),
+    );}
 
   final clear = TextEditingController();
 
   String wrongAnswer = "";
 
-  List<String> Lines = lines().Lines().split(",");
+  List<String> Lines = lines().textLines().split(",");
+
+  List Spaces(){
+    for(int a = 0; words().length > a; a++)
+        if(words()[a].contains(" ")){
+          Lines[a] = words()[a];}
+      return Lines;
+  }
 
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text("HangMan"),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                 Text(wrongAnswer,
-                 style: TextStyle(
-                   wordSpacing: 5,
-                 ),),
-              ],),
           TextField(
             controller: clear,
             maxLength: 1,
             decoration: InputDecoration(
-              labelText: words(),
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.white,)
+              ),
+              hintText: words(),
             ),
             onSubmitted: (text){
               clear.clear();
@@ -67,38 +73,50 @@ class _InputPageState extends State<InputPage>{
               if(words().toLowerCase().contains(text.toLowerCase())){
                 for(int i = 0;words().length > i; i++){
                   if(text.toLowerCase() == words()[i].toLowerCase()){
-                    Lines[i] = wordList[wordListNumber][i];
-                    if(Lines.join("") == words()){
+                    Lines[i] = words()[i];
+                    if(Lines.join() == words()){
                       WinOrLose(1);
                     }}}
               }else{
-                wrongAnswer += text;
-                if(wrongAnswer.length >= 5){
+                if(wrongAnswer.contains(text)){}
+                else{
+                  if(wrongAnswer.length < 8){
+                wrongAnswer += text;}
+                if(wrongAnswer.length == 8) {
                   WinOrLose(2);
-                }
+                }}
               }
             },
           ),
-      SizedBox(
-        height: 400.0,
-            child: Image.asset("images/40K.jpg"),
+          SizedBox(
+            child: Image.asset("images/Hangman${wrongAnswer.length}.png"),
+          ),
+      Center(
+            child: Container(
+                height: 200,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      for(String lines in Spaces())
+                        Text(lines,
+                          style: TextStyle(
+                            letterSpacing: 5,
+                            fontSize: 50.0,
+                          ),),
+                ]),
+            ),
           ),
           Container(
-            child: Text(winLose),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-          for(String lines in Lines)(
-            Center(
-            child: Container(
-              margin: EdgeInsets.all(5),
-                child: Text(lines,
-                style: TextStyle(
-                  fontSize: 60.0,
-                ),),
-            ),
-          )),],)
+            height: 50,
+            child: Row(
+                children: <Widget>[
+                   Text(wrongAnswer,
+                   style: TextStyle(
+                     fontSize: 40,
+                     wordSpacing: 5,
+                   ),),
+                ],),
+          )
             ],),
     );
   }
@@ -111,14 +129,13 @@ class _InputPageState extends State<InputPage>{
 
 int wordListNumber = Random().nextInt(wordList.length);
 
-int number()
-{
+int number() {
   return wordListNumber = Random().nextInt(wordList.length);
 }
 
 String words() {
     return wordList[wordListNumber];
-  }
+}
 
 
 

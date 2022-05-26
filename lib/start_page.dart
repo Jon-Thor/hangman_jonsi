@@ -29,7 +29,7 @@ class _StartPageState extends State<StartPage> {
               onPressed: () {
                 setState(() {});
                 number();
-                lines().Lines();
+                lines().textLines();
                 Navigator.push(context, MaterialPageRoute
                   (builder: (context) => InputPage())
                 );
@@ -44,6 +44,7 @@ class _StartPageState extends State<StartPage> {
               width: 240.0,
               color: Colors.red,
               child: TextField(
+                maxLength: 9,
                 controller: clear,
                 textAlign: TextAlign.center,
                   decoration: InputDecoration(
@@ -51,40 +52,13 @@ class _StartPageState extends State<StartPage> {
                   ),
                   onSubmitted: (text) {
                   clear.clear();
-                  wordList.add(text);
+                  if(text.trim().isEmpty){}
+                  else{
+                  wordList.add(text);}
                   }),
             )
           )
         ],),
     );
   }
-}
-
-class StartPageButton extends StatelessWidget {
-
-  StartPageButton({required this.onTap, required this.StartPageButtonName});
-
-  final String StartPageButtonName;
-   VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context){
-    return MaterialButton(
-      color: Colors.red,
-      height: 80.0,
-      minWidth: 240.0,
-      onPressed: () {  },
-      child: Center(child: Text(
-          StartPageButtonName
-      ),),
-    );
-  }
-  /*StartPageButton(onTap: (){
-  Navigator.push(context, MaterialPageRoute
-  (builder: (context) => InputPage())
-  );
-  hangmanwords.number();
-  }, StartPageButtonName: 'Play',
-  ),*/
-
 }
