@@ -5,6 +5,7 @@ import 'end_screen.dart';
 
 List<String> wordList = [
   "Talos", "Rogal Dorn", "Russ",
+  "God Emperor of Mankind"
 ];
 
 class lines {
@@ -65,7 +66,7 @@ class _InputPageState extends State<InputPage>{
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(color: Colors.white,)
               ),
-              hintText: words(),
+              hintText: "Guess a letter here",
             ),
             onSubmitted: (text){
               clear.clear();
@@ -78,11 +79,11 @@ class _InputPageState extends State<InputPage>{
                       WinOrLose(1);
                     }}}
               }else{
-                if(wrongAnswer.contains(text)){}
+                if(wrongAnswer.toLowerCase().contains(text.toLowerCase())){}
                 else{
                   if(wrongAnswer.length < 8){
-                wrongAnswer += text;}
-                if(wrongAnswer.length == 8) {
+                    wrongAnswer += text;}
+                  else if(wrongAnswer.length >= 8) {
                   WinOrLose(2);
                 }}
               }
@@ -91,21 +92,19 @@ class _InputPageState extends State<InputPage>{
           SizedBox(
             child: Image.asset("images/Hangman${wrongAnswer.length}.png"),
           ),
-      Center(
-            child: Container(
-                height: 200,
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      for(String lines in Spaces())
-                        Text(lines,
-                          style: TextStyle(
-                            letterSpacing: 5,
-                            fontSize: 50.0,
-                          ),),
-                ]),
-            ),
-          ),
+      Container(
+          height: 200,
+          child: Wrap(
+              alignment: WrapAlignment.center,
+              children: <Widget>[
+                for(String lines in Spaces())
+                  Text(lines,
+                    style: TextStyle(
+                      letterSpacing: 5,
+                      fontSize: 50.0,
+                    ),),
+          ]),
+      ),
           Container(
             height: 50,
             child: Row(

@@ -44,7 +44,6 @@ class _StartPageState extends State<StartPage> {
               width: 240.0,
               color: Colors.red,
               child: TextField(
-                maxLength: 9,
                 controller: clear,
                 textAlign: TextAlign.center,
                   decoration: InputDecoration(
