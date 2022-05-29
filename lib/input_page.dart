@@ -8,14 +8,24 @@ List<String> wordList = [
   "God Emperor of Mankind"
 ];
 
-class lines {
-  String textLines(){
+String textLines(){
     String line = "_,"*words().length;
     return line;
-  }
 }
 
+
 String winLose = "";
+
+
+int wordListNumber = Random().nextInt(wordList.length);
+
+int number() {
+  return wordListNumber = Random().nextInt(wordList.length);
+}
+
+String words() {
+  return wordList[wordListNumber];
+}
 
 
 
@@ -40,14 +50,15 @@ class _InputPageState extends State<InputPage>{
 
   String wrongAnswer = "";
 
-  List<String> Lines = lines().textLines().split(",");
-
+  //Lines takes the textLines String to make the lines
+  List<String> Lines = textLines().split(",");
   List Spaces(){
+    //checks if there any empty spaces
     for(int a = 0; words().length > a; a++)
         if(words()[a].contains(" ")){
           Lines[a] = words()[a];}
       return Lines;
-  }
+  }//
 
   @override
   Widget build(BuildContext context){
@@ -71,6 +82,7 @@ class _InputPageState extends State<InputPage>{
             onSubmitted: (text){
               clear.clear();
               setState(() {});
+              //checks if letter inputted is in the word
               if(words().toLowerCase().contains(text.toLowerCase())){
                 for(int i = 0;words().length > i; i++){
                   if(text.toLowerCase() == words()[i].toLowerCase()){
@@ -79,11 +91,12 @@ class _InputPageState extends State<InputPage>{
                       WinOrLose(1);
                     }}}
               }else{
+                //if letter isn't in the word it is added to wrongAnswer
                 if(wrongAnswer.toLowerCase().contains(text.toLowerCase())){}
                 else{
                   if(wrongAnswer.length < 8){
                     wrongAnswer += text;}
-                  else if(wrongAnswer.length >= 8) {
+                  if(wrongAnswer.length >= 8) {
                   WinOrLose(2);
                 }}
               }
@@ -92,6 +105,7 @@ class _InputPageState extends State<InputPage>{
           SizedBox(
             child: Image.asset("images/Hangman${wrongAnswer.length}.png"),
           ),
+      //Lines for the words are displayed here
       Container(
           height: 200,
           child: Wrap(
@@ -105,6 +119,7 @@ class _InputPageState extends State<InputPage>{
                     ),),
           ]),
       ),
+          //This is where the wrongAnswers are shown
           Container(
             height: 50,
             child: Row(
@@ -126,15 +141,7 @@ class _InputPageState extends State<InputPage>{
 
 
 
-int wordListNumber = Random().nextInt(wordList.length);
 
-int number() {
-  return wordListNumber = Random().nextInt(wordList.length);
-}
-
-String words() {
-    return wordList[wordListNumber];
-}
 
 
 

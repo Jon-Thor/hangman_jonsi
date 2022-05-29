@@ -29,7 +29,7 @@ class _StartPageState extends State<StartPage> {
               onPressed: () {
                 setState(() {});
                 number();
-                lines().textLines();
+                textLines();
                 Navigator.push(context, MaterialPageRoute
                   (builder: (context) => InputPage())
                 );

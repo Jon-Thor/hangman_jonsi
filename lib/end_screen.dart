@@ -1,8 +1,6 @@
 import 'input_page.dart';
 import 'package:flutter/material.dart';
 
-InputPage inputPage = InputPage();
-
 
 
 
